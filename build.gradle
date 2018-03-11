@@ -1,0 +1,48 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.7.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+
+group = 'com.anoop.transformpdf'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+	providedRuntime
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	//compile('com.bit-scout:pdf-converter:0.1.0-SNAPSHOT')
+	compile('org.apache.pdfbox:pdfbox-tools:2.0.3')
+	compile('com.itextpdf:itextpdf:5.5.10')
+	compile('com.itextpdf.tool:xmlworker:5.5.10')
+	compile('org.apache.poi:poi-scratchpad:3.15')
+	compile('org.apache.poi:poi-ooxml:3.15')
+	compile('org.apache.xmlgraphics:batik-transcoder:1.8')
+	compile('net.sf.cssbox:pdf2dom:1.6')
+	compile('joda-time:joda-time:2.9.7')	
+	compile('org.ghost4j:ghost4j:1.0.0')
+	compile('net.coobird:thumbnailator:0.4.8')
+	
+	
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}

@@ -1,0 +1,33 @@
+<html ng-app="transformPdf">
+<head>
+<meta charset="utf8" />
+<title>Document Archive</title>
+<link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+	<div id="wrap">
+		<div id="header">
+			<h1>File to convert</h1>
+		</div>
+		 
+		<div id="sidebar" ng-controller="UploadCtrl">
+			<h2>Upload</h2>
+			<table class="table">
+				  
+				<tr>
+					<td><input type="file" class="custom-file-input" file-model="myFile"></td>
+					
+				</tr>
+				<tr>
+					<td><button ng-click="uploadFile()">Upload</button></td>
+				</tr>
+			</table>
+		</div>
+		<div id="footer">
+			<p>Footer</p>
+		</div>
+	</div>
+	<script src="lib/angular/angular-1.2.16.js"></script>
+	<script src="app.js"></script>
+</body>
+</html>
