@@ -1,0 +1,125 @@
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{margin:0;}
+a{background:transparent}
+a:active,a:hover{outline:0}
+b,strong{font-weight:bold}
+h1{font-size:2em;margin:.67em 0}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+pre{overflow:auto}
+code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}
+button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}
+button{overflow:visible;text-transform:none}select{text-transform:none}
+button,html input[type="button"],input[type="reset"],
+input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+html input[disabled]{cursor:default}
+table{border-collapse:collapse;border-spacing:0}
+td,th{padding:0}*{box-sizing:border-box}
+body{min-width:1050px;font-family:Arial,sans-serif;background:url('../img/BG.png') top center no-repeat,#d9d9d9;background-attachment:fixed;display:table;width:100%}
+html,body{height:100%}
+
+.submit-button{height:50px;min-width:200px;padding:0 5px;border:solid 1px #dbdbdb;background:#66CCFF;border-radius:50px;font-size:18px;font-weight:bold; color:white;letter-spacing:2px;}
+.header-bottom{width:auto;margin-bottom:5px;position:relative;padding:20px 0 22px;text-align:center;background-color:rgba(255,255,255,0.53); }
+
+.header-bottom h1{margin:0;font-weight:normal;letter-spacing:-1.6px;color:#e00000;font-size:36px}
+.header-bottom p{margin:0;margin-top:2px;color:#333;letter-spacing:-0.2px}
+.header-bottom h2{margin:0;margin-top:2px;color:#333;letter-spacing:-0.2px;font-size:16px;font-weight:normal}
+section.content{padding:15px 0 36px}
+
+
+.file-upload-options{ width:auto;}
+.file-upload-option{width:auto;text-align:center;margin-top:15px;margin-bottom:	  }
+ .file-upload-option .content{padding:27px 0 31px;background-color:rgba(0,0,0,0.63)}
+.inner-new-page .file-source-button{margin-right:50px;background:linear-gradient(to bottom,#0099CC, #003399;);box-shadow:0 2px 6px rgba(0,0,0,0.52)}
+.file-upload-option .header{padding-right:12px;min-height:39px;background-color:rgba(0,0,0,0.53);color:#fff;font-size:14px;text-align:left}
+.file-upload-option .header a{display:inline-block;padding:12px 20px;color:#e1e1e1}
+.file-upload-option .header a:hover{text-decoration:none;color:#fff}
+.file-upload-option .header a.anchor-to-doc-conv{padding:12px 35px 12px 42px}
+.file-upload-option .header .action-desc{display:inline-block;padding:12px 20px 12px 30px}
+.file-formats{vertical-align:middle;font-size:12px;text-align:left}
+.file-formats .title{color:#a9a9a9;margin-bottom:10px}
+.file-formats .formats{color:#d8d8d8;text-transform:uppercase}
+.filesize-notice a{display:inline-block;margin-left:10px;color:#333}
+.to-text{color:#fff; padding-right:20px;}
+
+.file-sources-list,.from-format-list,.to-text,.to-format-list{display:inline-block;vertical-align:middle}
+.file-upload-option ul{margin:0;padding:0;list-style:none}.same-width-wrapper{text-align:center}
+.same-width{text-align:left;display:inline-block;min-width:640px}
+.file-upload-option ul.file-sources-list{margin-right:24px}
+.file-sources-show{position:relative}
+.file-sources-show:hover{cursor:pointer}
+.source-button-wrapper{display:table;margin-top:2px;min-width:260px;height:53px;box-shadow:0 1px 0 0 #c5c5c5}
+.source-text,.source-arrow{margin-top:2px;display:table-cell;vertical-align:middle}
+.source-text{padding:0 20px}.source-select-text{font-size:22px;margin-top:1px;margin-bottom:-3px}
+.file-source-title{margin-bottom:13px;font-size:30px;font-weight:bold;color:#333;letter-spacing:-1px}
+
+.file-source-button{display:inline-block;position:relative;height:54px;min-width:200px;padding-bottom:18px;padding-left:20px;border-radius:0px;background-color:#66CCFF;}
+
+.file-source-button:hover{cursor:pointer}
+.file-input{display:none}
+.action-label{padding-top:18px;color:#fff;font-size:15px;font-weight:bold;letter-spacing:-0.5px}
+
+
+.file-source-button .from-pc{height:100%;position:absolute;top:0;width:50px;}
+
+
+.file-source-button .from-pc{right:150px;background:url('../img/From-pc.png') center no-repeat}
+.format-current{position:relative}
+.format-current-wrapper{display:table;height:55px;min-width:130px;line-height:54px}
+.format-current-text,.format-current-arrow{display:table-cell;vertical-align:middle}
+.format-current-text{font-family:Arial-Black,sans-serif;padding:0 3px;background-color:#fff;font-size:48px;font-weight:bold;text-transform:uppercase}
+.format-current:hover{cursor:pointer}.format-groups{position:absolute;margin:0;padding:0;min-width:100%;box-shadow:0 4px 4px 0 rgba(0,0,0,0.22);background-color:#fff;top:100%;left:0;list-style:none;text-align:left;font-size:14px;z-index:10}
+.format-groups>li:hover,.available-mime-types>li:hover{background-color:#933;color:#fff}
+.format-groups li{border-bottom:solid #ededed 1px}
+
+.hide{display:none!important}
+
+
+.dropbtn {background-color: #000000;color: white;padding-right:20px;padding-left:20px;font-size: 35px;font-weight:bold;cursor: pointer;}
+
+.dropdown {position: relative;display: inline-block;}
+.dropdown-content {display: none;position: absolute;background-color: #f9f9f9;min-width: 160px;box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);z-index: 1;}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #66CCFF;
+}
+
+@media (max-width:500px) {
+ .header,.header-bottom, .file-upload-option,.file-upload-options {
+    width:100%; /*The width is 100%, when the viewport is 800px or smaller*/
+	float:left;
+ }
+}
+@media (max-width:1024px) {
+  .header,.header-bottom, .file-upload-option,.file-upload-options {
+    width:100%; /*The width is 100%, when the viewport is 800px or smaller*/
+	float:left;
+ }
+}
+@media (max-width:812px) {
+	.header,.header-bottom, .file-upload-option,.file-upload-options {
+    width:100%; /*The width is 100%, when the viewport is 800px or smaller*/
+	float:left;
+ }
+}
+
+
+
+.center {
+    margin: auto;
+    width: 60%;
+   
+    padding: 10px;
+}

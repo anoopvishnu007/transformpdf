@@ -1,33 +1,378 @@
-<html ng-app="transformPdf">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf8" />
-<title>Document Archive</title>
-<link rel="stylesheet" href="styles/styles.css">
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/build1c38.css">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-select.min.css">
+	
+	
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap-select.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<!-- <script src="js/angular.min.js"></script> -->
+	
+  	<script src="js/angular-1.2.16.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+	
+    <Title> Online PDF to Word Converter | Convert PDF to DOC, JPG, PNG, text & vice-versa </Title>
+    <meta name="description" content=" Free online tools to convert files
+from PDF to Word, PDF to JPG, PDF to PNG, PDF to Text, Text to PDF, PNG to PDF,
+JPG to PDF, Word to PDF, Image to PDF without losing the quality of files "/>
+
+    <meta name="keywords" content=" pdf converter, pdf to word
+converter, pdf to doc converter, pdf to word, word to pdf converter, pdf to
+word converter online, pdf to word converter free, pdf to word online, PDF to
+Word, PDF to JPG, PDF to PNG, PDF to Text, Text to PDF, PNG to PDF, JPG to PDF,
+Word to PDF, Image to PDF"/>
+	
+    <style>
+        /* Remove the navbar's default margin-bottom and rounded borders */
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+        .row.content {
+            height: 450px
+        }
+
+        /* Set gray background color and 100% height */
+        .sidenav {
+            padding-top: 20px;
+            background-color: #f1f1f1;
+            height: 100%;
+        }
+
+        .container-fluid {
+            /*display: flex;*/
+        }
+
+        /* Set black background color, white text and some padding */
+        footer {
+            background-color: #555;
+            color: white;
+            padding: 15px;
+            position: relative;
+            left: 0;
+            bottom: -50px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* On small screens, set height to 'auto' for sidenav and grid */
+        @media screen and (max-width: 767px) {
+            .sidenav {
+                height: auto;
+                padding: 15px;
+            }
+
+            .row.content {
+                height: auto;
+            }
+        }
+
+        @media (max-width: 812px) {
+            .header, .header-bottom, .file-upload-option, .file-upload-options {
+                width: 100%;
+                float: unset !important;
+            }
+        }
+
+        /*Upload Button*/
+        .upload-btn-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .btn {
+            border: 2px solid gray;
+            color: gray;
+            background-color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .upload-btn-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+
+        .to-text {
+            color: #fff;
+            padding-right: 10px;
+            padding-left: 10px;
+            font-size: 20px;
+        }
+    </style>
+
+    <script>
+        var app = angular.module('pdfApp', []);
+        app.controller('appController',['$scope','$rootScope','$http','fileUpload', function ($scope, $rootScope, $http,fileUpload) {
+            $scope.selectedImgeType = null;
+           var downloadBtn = document.getElementById('downloadBtn');
+            $scope.fileList = [];
+
+            $scope.pdfUpload = function (ele) {
+                $scope.pdffileList = [];
+                $scope.imagefileList = [];
+                var files = ele.files;
+                console.log(files);
+                for (var i = 0; i < files.length; i++) {
+                    $scope.pdffileList.push(files[i].name);
+                }
+                $scope.fileList = $scope.pdffileList;
+                console.log($scope.pdffileList);
+                $scope.$apply();
+            }
+
+            $scope.imageUpload = function (ele) {
+                $scope.imagefileList = [];
+                $scope.pdffileList = [];
+                var files = ele.files;
+                console.log(files);
+                for (var i = 0; i < files.length; i++) {
+                    $scope.imagefileList.push(files[i].name);
+                }
+                $scope.fileList = $scope.imagefileList
+                console.log($scope.imagefileList);
+                $scope.$apply();
+            };
+
+            $scope.selectImageType = function(imageType){
+                $scope.imgType = imageType;
+            };
+              
+            $scope.submit = function () {
+                if ($scope.imgType == null || $scope.imgType == 0 ){
+                    alert("Please select image type")
+                    return
+                }
+                if ($scope.fileList.length <= 0 ){
+                    alert("Please Select File")
+                    return
+                }
+                var file = $scope.fileList[0];
+				var format = $scope.selectImageType;
+ 				console.log('file is ' + JSON.stringify(file));
+				var uploadUrl = "/transform/uploadPDFFile";
+				fileUpload.uploadFileToUrl(uploadUrl, file, format);
+                /* $http.get('http://localhost:8080/transform/uploadPDFFile').then(function(response) {
+                    console.log(response.data)
+                    $scope.download = true;
+                   downloadBtn.style.display = 'block';
+                }); */
+                if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+                    $scope.$apply();
+                }
+            }
+
+            $scope.downloadFile = function(){
+                alert("Hello !")
+            }
+        }]);
+       
+        app.service('fileUpload', ['$http', function($http) {
+        	this.uploadFileToUrl = function(uploadUrl, file,format) {
+        		var fd = new FormData();
+        		fd.append('file', file);
+				console.log('file is ' + JSON.stringify(file));
+
+        		fd.append('convertFormat', format);
+        		fd.append('resolution', "300");
+
+         		$http.post(uploadUrl, fd, {
+        			transformRequest : angular.identity,
+        			headers : {
+        				'Content-Type' : undefined
+        			}
+        		}).success(function() {
+        			 console.log(response.data)
+                     $scope.download = true;
+                    downloadBtn.style.display = 'block';
+        		}).error(function() {
+        		});
+        	}
+        } ]);
+    </script>
+
 </head>
-<body>
-	<div id="wrap">
-		<div id="header">
-			<h1>File to convert</h1>
-		</div>
-		 
-		<div id="sidebar" ng-controller="UploadCtrl">
-			<h2>Upload</h2>
-			<table class="table">
-				  
-				<tr>
-					<td><input type="file" class="custom-file-input" file-model="myFile"></td>
-					
-				</tr>
-				<tr>
-					<td><button ng-click="uploadFile()">Upload</button></td>
-				</tr>
-			</table>
-		</div>
-		<div id="footer">
-			<p>Footer</p>
-		</div>
-	</div>
-	<script src="lib/angular/angular-1.2.16.js"></script>
-	<script src="app.js"></script>
+<body ng-app="pdfApp" ng-controller="appController">
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="img/logo.png" style="width:100px; margin: -6px"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Projects</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header>
+    <div class="header-bottom">
+        <!--<img src="img/logo.png" style="width:150px; float:left; padding-left:10px">-->
+        <h1>PDF Converter</h1>
+        <h2>Convert your PDF files to jpg, png..etc online </h2><br>
+    </div>
+</header>
+
+<div class="container-fluid text-center">
+
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+            <div class="well" style="min-height: unset !important; padding: 0px !important;">
+                <img src="img/advertisement.jpg" width="100%" height="120px">
+            </div>
+        </div>
+        <div class="col-sm-8 text-left">
+            <div class="file-upload-option" style="width: 100%;float: unset !important;">
+
+                <!--PDF to Image-->
+                <div class="header clearfix">
+                    <span class="action-desc">Select files to convert or drag & drop them on this page<br/><b>100 MB</b> maximum file size</span>
+                </div>
+                <div class="content">
+                    <div class="row" style="margin: 0px">
+                        <div class="col-md-8 col-sm-8 col-xs-7" style="padding: 8px">
+                            <ul class="from-format-list format-list">
+                                <li class="format-current">
+                                    <div class="format-current-wrapper">
+                                        <div style="font-family:Arial-Black,sans-serif;padding:3px;color:white;font-size:48px;font-weight:bold;">
+                                            PDF
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <span class="to-text">TO</span>
+
+                            <select class="selectpicker show-tick" onchange="angular.element(this).scope().selectImageType(this.value)">
+                                <option value="0">-- Select --</option>
+                                <option value="jpeg">JPEG</option>
+                                <option value="png">PNG</option>
+                                <option value="gif">GIF</option>
+                                <option value="bmp">BMP</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-5" style="padding: 8px">
+                            <div class="upload-btn-wrapper">
+                                <button class="btn">Choose File</button>
+                                <input type="file" accept="application/pdf" name="pc-upload"
+                                       onchange="angular.element(this).scope().pdfUpload(this)" file-model="myFile"/>
+
+                            </div>
+
+                            <ul style="max-height: 150px;overflow: auto;color: white;font-size: 18px">
+                                <li data-ng-repeat="item in pdffileList">
+                                    {{item}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="row" style="margin: 0px">
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--Image to PDF-->
+                <div class="space" style="height: 40px"></div>
+
+                <div class="header ">
+                    <span class="action-desc">Select files to convert or drag & drop them on this page<br/><b>100 MB</b> maximum file size</span>
+                </div>
+                <div class="content">
+
+                    <div class="row" style="margin: 0px">
+                        <div class="col-md-8 col-sm-8 col-xs-7" style="padding: 8px">
+                            <select class="selectpicker show-tick" onchange="angular.element(this).scope().selectImageType(this.value)">
+                                <option value="0">-- Select --</option>
+                                <option value="jpeg">JPEG</option>
+                                <option value="png">PNG</option>
+                                <option value="gif">GIF</option>
+                                <option value="bmp">BMP</option>
+                            </select>
+
+                            <span class="to-text">TO </span>
+
+                            <ul class="from-format-list format-list">
+                                <li class="format-current">
+                                    <div class="format-current-wrapper">
+                                        <div style="font-family:Arial-Black,sans-serif;padding:3px;color:white;font-size:48px;font-weight:bold;">
+                                            PDF
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-5" style="padding: 8px">
+                            <div class="upload-btn-wrapper">
+                                <button class="btn">Choose File</button>
+                                <input type="file" accept="image/*" name="pc-upload"
+                                       onchange="angular.element(this).scope().imageUpload(this)"/>
+
+                            </div>
+
+                            <ul style="max-height: 150px;overflow: auto;color: white; font-size: 18x">
+                                <li data-ng-repeat="item in imagefileList">{{item}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <br/>
+                <div class="row" style="margin: 0px">
+                    <div>
+                        <button class="submit-button" ng-click="submit()">Submit</button>
+                    </div>
+                    <div style="display: none" id="downloadBtn">
+                        <button class="submit-button" ng-click="downloadFile()">Download</button>
+                    </div>
+
+                </div>
+
+                <br/><br/>
+            </div>
+        </div>
+        <div class="col-sm-2 sidenav">
+            <div class="well" style="min-height: unset !important; padding: 0px !important;">
+                <img src="img/advertisement.jpg" width="100%" height="120px">
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center " style="margin-top: 40px">
+    <p>Footer Text</p>
+</footer>
+
 </body>
 </html>
