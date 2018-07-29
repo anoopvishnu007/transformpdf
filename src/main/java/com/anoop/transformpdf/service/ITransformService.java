@@ -1,5 +1,7 @@
 package com.anoop.transformpdf.service;
 
+import java.io.File;
+
 import com.anoop.transformpdf.data.Document;
 import com.anoop.transformpdf.data.DocumentMetadata;
 
@@ -21,7 +23,7 @@ public interface ITransformService {
 
 	DocumentMetadata convertPDFFile(Document document);
 
-	byte[] getDocumentFile(String id);
+	File getDocumentFile(String id, String fileName);
     
      
 }

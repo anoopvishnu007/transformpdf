@@ -7,6 +7,8 @@ import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.apache.commons.io.FileUtils;
+
 public class ZipCreator {
 //    private static final Logger log = LoggerFactory.getLogger(ZipCreator.class);
 
@@ -15,12 +17,13 @@ public class ZipCreator {
     }
 
     private static void pack(String sourceDirPath, String zipFilePath) throws IOException {
-        Path p = Files.createFile(Paths.get(zipFilePath));
-        try (ZipOutputStream zs = new ZipOutputStream(Files.newOutputStream(p))) {
-            Path pp = Paths.get(sourceDirPath);
+		Path p = Files.createFile(Paths.get(zipFilePath));
+        ZipOutputStream zs = new ZipOutputStream(Files.newOutputStream(p));
+		Path pp = Paths.get(sourceDirPath);
             Files.walk(pp)
                     .filter(path -> !Files.isDirectory(path))
                     .forEach(path -> {
+					if (!pp.relativize(path).equals("metadata.properties")) {
                         ZipEntry zipEntry = new ZipEntry(pp.relativize(path).toString());
                         try {
                             zs.putNextEntry(zipEntry);
@@ -29,8 +32,11 @@ public class ZipCreator {
                         } catch (Exception e) {
 //                            log.warn("Failed to create zip file", e);
                         }
-                    });
-        }
+					}
+				});
+		zs.close();
+		Path target = Paths.get(sourceDirPath);
+		FileUtils.copyFileToDirectory(p.toFile(), target.toFile());
     }
 
     public static void main(String[] args) {

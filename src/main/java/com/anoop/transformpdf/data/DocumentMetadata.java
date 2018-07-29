@@ -19,6 +19,7 @@ public class DocumentMetadata implements Serializable {
 	protected String uuid;
 	protected String fileName;
 	protected int resolution;
+	protected String outputFileName;
 	public static final String PROP_UUID = "uuid";
 	public static final String PROP_FILE_NAME = "file-name";
     public DocumentMetadata() {
@@ -106,5 +107,13 @@ public class DocumentMetadata implements Serializable {
 
 	public void setResolution(int resolution) {
 		this.resolution = resolution;
+	}
+
+	public String getOutputFileName() {
+		return outputFileName;
+	}
+
+	public void setOutputFileName(String outputFileName) {
+		this.outputFileName = outputFileName;
 	}
 }

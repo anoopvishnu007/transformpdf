@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,24 +41,36 @@ public class TransformService implements ITransformService, Serializable {
 			fileSystemDocumentDao.createFile(document, true);
 			String outputDir = fileSystemDocumentDao.getDirectoryPath(document.getUuid(), false);
 			File outputDirectory = new File(outputDir);
+			outputDirectory.mkdirs();
 			switch (format) {
 			case "png":
 				PDF2ImageConverter.generateImageFromPDF(outputDirectory, document);
 				createOutputZipFile(document, outputDirectory);
+				break;
 			case "jpg":
 				PDF2ImageConverter.generateImageFromPDF(outputDirectory, document);
 				createOutputZipFile(document, outputDirectory);
+				break;
+			case "jpeg":
+				PDF2ImageConverter.generateImageFromPDF(outputDirectory, document);
+				createOutputZipFile(document, outputDirectory);
+				break;
 			case "doc":
 				PDF2WordConverter.generateDocFromPDF(outputDirectory, document);
+				break;
 			case "docx":
 				PDF2WordConverter.generateDocFromPDF(outputDirectory, document);
+				break;
 			case "txt":
 				PDF2TextConverter.generateTxtFromPDF(outputDirectory, document);
+				break;
 			case "html":
 				PDF2HTMLConverter.generateHTMLFromPDF(outputDirectory, document);
+				break;
 
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
 
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
@@ -68,15 +81,19 @@ public class TransformService implements ITransformService, Serializable {
 	}
 
 	private void createOutputZipFile(Document document, File outputDirectory) {
-		String outputFilePath = outputDirectory + File.separator + document.getFileName();
+
+		String outputFilePath = outputDirectory.getParentFile() + File.separator
+				+ FilenameUtils.getBaseName(document.getFileName())
+				+ ".zip";
 		File outputFile = new File(outputFilePath);
 		try {
-			ZipCreator.create(outputDirectory, outputFile);
+			ZipCreator.create(outputDirectory, new File(outputFilePath));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		document.setConvertedFile(outputFile);
+		document.setOutputFileName(outputFile.getName());
 	}
 
 	/**
@@ -85,10 +102,10 @@ public class TransformService implements ITransformService, Serializable {
 	 * @see org.murygin.archive.service.IArchiveService#getDocumentFile(java.lang.String)
 	 */
 	@Override
-	public byte[] getDocumentFile(String id) {
-		Document document = fileSystemDocumentDao.load(id);
+	public File getDocumentFile(String id, String fileName) {
+		Document document = fileSystemDocumentDao.load(id, fileName);
 		if (document != null) {
-			return document.getFileData();
+			return document.getConvertedFile();
 		} else {
 			return null;
 		}
@@ -105,6 +122,8 @@ public class TransformService implements ITransformService, Serializable {
 			case "png":
 				PDF2ImageConverter.generatePDFFromImage(outputDirectory, document);
 			case "jpg":
+				PDF2ImageConverter.generatePDFFromImage(outputDirectory, document);
+			case "jpeg":
 				PDF2ImageConverter.generatePDFFromImage(outputDirectory, document);
 			case "doc":
 				PDF2WordConverter.generatePDFFromDoc(outputDirectory, document);

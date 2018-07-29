@@ -25,24 +25,30 @@ public class PDF2HTMLConverter {
 	public static void generateHTMLFromPDF(File outputDir, Document documentObj)
 			throws ParserConfigurationException, IOException {
 		PDDocument pdf = PDDocument.load(documentObj.getSourceFile());
+		File outFile=new File(
+				outputDir.getPath() + File.separator + FilenameUtils.getBaseName(documentObj.getFileName()) + ".html");
 		PDFDomTree parser = new PDFDomTree();
-		Writer output = new PrintWriter(
-				outputDir.getPath() + File.separator + FilenameUtils.getBaseName(documentObj.getFileName()) + ".html",
+		Writer output = new PrintWriter(outFile,
 				"utf-8");
 		parser.writeText(pdf, output);
 		output.close();
 		if (pdf != null) {
 			pdf.close();
 		}
+		documentObj.setConvertedFile(outFile);
+		documentObj.setOutputFileName(outFile.getName());
 	}
 
 	public static void generatePDFFromHTML(File outputDir, Document documentObj)
 			throws ParserConfigurationException, IOException, DocumentException {
 		com.itextpdf.text.Document document = new com.itextpdf.text.Document();
-		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(
-				outputDir.getPath() + File.separator + FilenameUtils.getBaseName(documentObj.getFileName()) + ".pdf"));
+		File outFile = new File(
+				outputDir.getPath() + File.separator + FilenameUtils.getBaseName(documentObj.getFileName()) + ".html");
+		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(outFile));
 		document.open();
 		XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream(documentObj.getSourceFile()));
 		document.close();
+		documentObj.setConvertedFile(outFile);
+		documentObj.setOutputFileName(outFile.getName());
 	}
 }

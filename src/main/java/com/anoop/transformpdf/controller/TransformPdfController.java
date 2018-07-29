@@ -1,12 +1,13 @@
 package com.anoop.transformpdf.controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,7 @@ public class TransformPdfController {
 		DocumentMetadata metadata = null;
 		try {
 			Document document = new Document(file.getBytes(), file.getOriginalFilename(), convertFormat);
+			document.setResolution(Integer.valueOf(resolution));
 			metadata = transformService.convertPDFFile(document);
 
 		} catch (RuntimeException e) {
@@ -77,12 +79,22 @@ public class TransformPdfController {
 	 *            The UUID of a document
 	 * @return The document file
 	 */
-	@RequestMapping(value = "/getDocument/{id}", method = RequestMethod.GET)
-	public HttpEntity<byte[]> getDocument(@PathVariable String id) {
+	@RequestMapping(value = "/downloadFile/{id}/{fileName:.+}", method = RequestMethod.GET)
+	public void getDocument(@PathVariable String id, @PathVariable String fileName, HttpServletResponse response) {
 		// send it back to the client
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.IMAGE_JPEG);
-		return new ResponseEntity<byte[]>(transformService.getDocumentFile(id), httpHeaders, HttpStatus.OK);
+		InputStream is;
+		try {
+			response.setContentType("application/*");
+
+			is = new FileInputStream(transformService.getDocumentFile(id, fileName));
+			org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
+			response.flushBuffer();
+			is.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

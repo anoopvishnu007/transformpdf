@@ -8,9 +8,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -43,6 +43,7 @@ public class FileSystemDocumentDao implements IDocumentDao {
 	public static final String DIRECTORY = "transform";
 	public static final String IN_DIR = "input";
 	public static final String OUT_DIR = "output";
+	public static final String FILE_DIR = "files";
 	public static final String META_DATA_FILE_NAME = "metadata.properties";
 
 	public static final long TEN_MINUTES = 10 * 60 * 1000;
@@ -64,6 +65,7 @@ public class FileSystemDocumentDao implements IDocumentDao {
         try {
 			createDirectory(document, isInputDoc);
 			saveFileData(document, isInputDoc);
+			saveMetaData(document);
 		} catch (IOException e) {
             String message = "Error while inserting document";
             LOG.error(message, e);
@@ -74,34 +76,58 @@ public class FileSystemDocumentDao implements IDocumentDao {
 
 	private void saveFileData(Document document, boolean isInputDoc) throws IOException {
 		String path = getDirectoryPath(document.getUuid(), isInputDoc);
-        BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(new File(path), document.getFileName())));
+		File inputFile = new File(new File(path), document.getFileName());
+		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(inputFile));
 		stream.write(document.getFileData());
         stream.close();
-		document.setSourceFile(new File(path));
+		document.setSourceFile(inputFile);
     }
 
 	public void saveMetaData(Document document) throws IOException {
 		String path = getDirectoryPath(document.getUuid(), false);
+		File outputDirectory = new File(path);
+		outputDirectory.mkdirs();
 		Properties props = document.createProperties();
-		File f = new File(new File(path), META_DATA_FILE_NAME);
+		File f = new File(outputDirectory, META_DATA_FILE_NAME);
 		OutputStream out = new FileOutputStream(f);
 		props.store(out, "Document meta data");
+		out.close();
 	}
-	private Document loadFromFileSystem(String uuid) throws IOException {
+
+	private Document loadFromFileSystem(String uuid, String fileName) throws IOException {
 		DocumentMetadata metadata = loadMetadataFromFileSystem(uuid);
 		if (metadata == null) {
 			return null;
 		}
-		Path path = Paths.get(getDirectoryPath(uuid, false));
-		
 		Document document = new Document(metadata);
-		document.setFileData(Files.readAllBytes(path));
+		Path path = Paths.get(getDirectoryPath(uuid, false) + File.separator + fileName);
+
+		document.setConvertedFile(path.toFile());
 		return document;
 	}
     
 
 	private List<File> getOldFileList() {
-        File file = new File(DIRECTORY);
+		List<File> fileList=new ArrayList<File>();
+		StringBuilder sb = new StringBuilder();
+		sb.append(DIRECTORY).append(File.separator).append(IN_DIR);
+		String path = sb.toString();
+		File[] files = getFiles(path);
+		if (files != null && files.length > 0) {
+			fileList.addAll(Arrays.asList(files));
+		}
+		sb = new StringBuilder();
+		sb.append(DIRECTORY).append(File.separator).append(OUT_DIR);
+		path = sb.toString();
+		files = getFiles(path);
+		if (files != null && files.length > 0) {
+			fileList.addAll(Arrays.asList(files));
+		}
+		return fileList;
+    }
+
+	private File[] getFiles(String directory) {
+		File file = new File(directory);
 		File[] files = file.listFiles(new FileFilter() {
           @Override
 			public boolean accept(File current) {
@@ -114,8 +140,8 @@ public class FileSystemDocumentDao implements IDocumentDao {
 				return isOld;
           }
         });
-		return Arrays.asList(files);
-    }
+		return files;
+	}
     
 
     
@@ -146,7 +172,8 @@ public class FileSystemDocumentDao implements IDocumentDao {
 
 	private String getOutputDirectory(String uuid) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(DIRECTORY).append(File.separator).append(OUT_DIR).append(File.separator).append(uuid);
+		sb.append(DIRECTORY).append(File.separator).append(OUT_DIR).append(File.separator).append(uuid)
+				.append(File.separator).append(FILE_DIR);
 		String path = sb.toString();
 		return path;
 	}
@@ -157,9 +184,9 @@ public class FileSystemDocumentDao implements IDocumentDao {
     }
 
 	@Override
-	public Document load(String uuid) {
+	public Document load(String uuid, String fileName) {
 		try {
-			return loadFromFileSystem(uuid);
+			return loadFromFileSystem(uuid, fileName);
 		} catch (IOException e) {
 			String message = "Error while loading document with id: " + uuid;
 			LOG.error(message, e);
@@ -171,12 +198,21 @@ public class FileSystemDocumentDao implements IDocumentDao {
 	@Scheduled(fixedRate = 300000)
 	public void deleteOldFiles() {
 		List<File> files = getOldFileList();
-		for (File file : files) {
-			if (file.exists()) {
+		deleteFiles(files);
+	}
+
+	private void deleteFiles(List<File> listFiles) {
+		for (File file : listFiles) {
+			if (file.isDirectory()) {
+				deleteFiles(Arrays.asList(file.listFiles()));
+				file.delete();
+			} else {
 				file.delete();
 			}
+
 		}
 	}
+
 	private DocumentMetadata loadMetadataFromFileSystem(String uuid) throws IOException {
 		DocumentMetadata document = null;
 		String dirPath = getDirectoryPath(uuid, false);

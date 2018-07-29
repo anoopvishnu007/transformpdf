@@ -39,12 +39,16 @@ public class PDF2WordConverter {
 			run.setText(text);
 			run.addBreak(BreakType.PAGE);
 		}
-		FileOutputStream out = new FileOutputStream(
-				outputDir.getPath() + File.separator + FilenameUtils.getBaseName(documentObj.getFileName()) + ".docx");
+		File outFile = new File(
+				outputDir.getPath() + File.separator + FilenameUtils.getBaseName(documentObj.getFileName())
+						+ "." + documentObj.getFormatToConvert());
+		FileOutputStream out = new FileOutputStream(outFile);
 		doc.write(out);
 		out.close();
 		reader.close();
 		doc.close();
+		documentObj.setConvertedFile(outFile);
+		documentObj.setOutputFileName(outFile.getName());
 	}
 
 	public static void generatePDFFromDoc(File outputDir, Document documentObj) {
@@ -52,7 +56,8 @@ public class PDF2WordConverter {
 		String k = null;
 		OutputStream fileForPdf = null;
 		try {
-
+			File outFile = new File(outputDir.getPath() + File.separator
+					+ FilenameUtils.getBaseName(documentObj.getFileName()) + ".pdf");
 			// Below Code is for .doc file
 			if (documentObj.getSourceFile().getName().endsWith(".doc"))
 			{
@@ -60,8 +65,7 @@ public class PDF2WordConverter {
 				WordExtractor we = new WordExtractor(doc);
 				k = we.getText();
 
-				fileForPdf = new FileOutputStream(
-						new File(FilenameUtils.getBaseName(documentObj.getSourceFile().getName()) + ".pdf"));
+				fileForPdf = new FileOutputStream(outFile);
 
 				we.close();
 			}
@@ -76,8 +80,7 @@ public class PDF2WordConverter {
 				XWPFWordExtractor we = new XWPFWordExtractor(docx);
 				k = we.getText();
 
-				fileForPdf = new FileOutputStream(
-						new File(FilenameUtils.getBaseName(documentObj.getSourceFile().getName()) + ".pdf"));
+				fileForPdf = new FileOutputStream(outFile);
 				we.close();
 			}
 
@@ -90,7 +93,8 @@ public class PDF2WordConverter {
 
 			document.close();
 			fileForPdf.close();
-
+			documentObj.setConvertedFile(outFile);
+			documentObj.setOutputFileName(outFile.getName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

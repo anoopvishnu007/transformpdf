@@ -17,8 +17,9 @@ public interface IDocumentDao {
      */
 	void createFile(Document document, boolean isInputDoc);
 
-	Document load(String id);
+	Document load(String uuid, String fileName);
 
 	void deleteOldFiles();
-    
+
+
 }

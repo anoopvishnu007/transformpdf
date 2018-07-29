@@ -26,8 +26,11 @@ public class PDF2ImageConverter {
 		PDDocument document = PDDocument.load(documentObj.getSourceFile());
 		PDFRenderer pdfRenderer = new PDFRenderer(document);
 		for (int page = 0; page < document.getNumberOfPages(); ++page) {
+
 			BufferedImage bim = pdfRenderer.renderImageWithDPI(page, documentObj.getResolution(), ImageType.RGB);
 			ImageIOUtil.writeImage(bim,
+					outputDir.getPath() + File.separator
+							+
 					String.format(FilenameUtils.getBaseName(documentObj.getFileName()) + "%d.%s", page + 1,
 							documentObj.getFormatToConvert()),
 					documentObj.getResolution());

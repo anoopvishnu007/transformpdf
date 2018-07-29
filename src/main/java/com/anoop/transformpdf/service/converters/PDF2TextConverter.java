@@ -42,19 +42,21 @@ public class PDF2TextConverter {
 			cosDoc.close();
 		if (pdDoc != null)
 			pdDoc.close();
-
-		PrintWriter pw = new PrintWriter(
+		File outFile = new File(
 				outputDir.getPath() + File.separator + FilenameUtils.getBaseName(documentObj.getFileName()) + ".txt");
+		PrintWriter pw = new PrintWriter(outFile);
 		pw.print(parsedText);
 		pw.close();
+		documentObj.setConvertedFile(outFile);
+		documentObj.setOutputFileName(outFile.getName());
+
 	}
 
 	public static void generatePDFFromTxt(File outputDir, Document documentObj) throws IOException, DocumentException {
 		com.itextpdf.text.Document pdfDoc = new com.itextpdf.text.Document(PageSize.A4);
-		PdfWriter
-				.getInstance(pdfDoc,
-						new FileOutputStream(outputDir.getPath() + File.separator
-								+ FilenameUtils.getBaseName(documentObj.getFileName()) + ".pdf"))
+		File outFile = new File(
+				outputDir.getPath() + File.separator + FilenameUtils.getBaseName(documentObj.getFileName()) + ".pdf");
+		PdfWriter.getInstance(pdfDoc, new FileOutputStream(outFile))
 				.setPdfVersion(PdfWriter.PDF_VERSION_1_7);
 		pdfDoc.open();
 		
@@ -73,6 +75,8 @@ public class PDF2TextConverter {
 		
 		pdfDoc.close();
 		br.close();
+		documentObj.setConvertedFile(outFile);
+		documentObj.setOutputFileName(outFile.getName());
 	}
 
 }
