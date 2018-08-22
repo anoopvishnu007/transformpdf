@@ -1,7 +1,7 @@
 
 var pdfApp = angular.module('pdfApp', ['ngRoute','angular-google-adsense','720kb.socialshare','angulike']);
 
-pdfApp.config(function($routeProvider) {
+pdfApp.config(function($routeProvider,$locationProvider) {
 	$routeProvider
 		// route for the about page
 		.when('/about', {
@@ -15,13 +15,16 @@ pdfApp.config(function($routeProvider) {
 			controller  : 'contactController'
 		})
 		.when('/sitemap', {
-			templateUrl : '/sitemap.html',
-			controller  : 'contactController'
+			templateUrl : '/sitemap.html'
+		})
+		.when('/robots', {
+			templateUrl : '/robots.txt'
 		})
 		.when('/', {
 			templateUrl : 'pages/home.html',
 			controller  : 'appController'
 		});
+	$locationProvider.html5Mode(true);	
 });
 pdfApp.directive('fileModel', [ '$parse', function($parse) {
 	return {
@@ -112,6 +115,7 @@ pdfApp.controller('aboutController', function($scope) {
 pdfApp.controller('contactController', function($scope) {
 	$scope.message = 'Contact us! www.transformpdf.com';
 });
+
 pdfApp.service('fileUpload', ['$http', function($http) {
   
  		this.uploadFileToUrl=function(uploadUrl, file,format) {

@@ -3,6 +3,7 @@
 <head>
   
     <meta charset="utf-8">
+    <base href="/">    
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="css/build1c38.css">
@@ -10,9 +11,9 @@
     <link type="text/css" rel="stylesheet" href="css/bootstrap-select.min.css">
     <link rel="stylesheet" type="text/css"
           href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="http://720kb.github.io/csshelper/assets/ext/src/helper.css">
+    <link rel="stylesheet" type="text/css" href="https://720kb.github.io/csshelper/assets/ext/src/helper.css">
 	<link rel="stylesheet" type="text/css" href="//yastatic.net/highlightjs/8.2/styles/vs.min.css">
-  <link rel="stylesheet" type="text/css" href="http://720kb.github.io/angular-socialshare/assets/css/awful.css">
+  <link rel="stylesheet" type="text/css" href="https://720kb.github.io/angular-socialshare/assets/css/awful.css">
 	
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap-select.min.js"></script>
@@ -22,6 +23,7 @@
 	 <script src="js/angular-socialshare.min.js"></script>	  
 	 <script src="js/angular-route.js"></script>
 	 <script src="js/angulike.js"></script>
+	 
 		<!--  <script src="js/ng2-adsense.umd.min.js"></script>  -->
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
  	<script src="js/angular-google-adsense.min.js"></script> 
@@ -54,6 +56,8 @@ Word, PDF to JPG, PDF to PNG, PDF to Text, Text to PDF, PNG to PDF, JPG to PDF,
 Word to PDF, Image to PDF,download converted pdf"/>
 	
     <style>
+    
+    
         /* Remove the navbar's default margin-bottom and rounded borders */
         .navbar {
             margin-bottom: 0;
@@ -62,7 +66,7 @@ Word to PDF, Image to PDF,download converted pdf"/>
 
         /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
         .row.content {
-            height: 450px
+            height: 100%;
         }
 
         /* Set gray background color and 100% height */
@@ -175,9 +179,9 @@ Word to PDF, Image to PDF,download converted pdf"/>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#!">Home</a></li>
-                <li><a href="#!about">About Us</a></li>
-                 <li><a href="#!contact">Contact Us</a></li>
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                 <li><a href="/contact">Contact Us</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><!-- <a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a> --></li>
@@ -198,25 +202,25 @@ Word to PDF, Image to PDF,download converted pdf"/>
   <div ng-view></div>
 
 
-<footer class="text-center " style="margin-top: 40px">
+<footer class="text-center " style="margin-bottom: 0px">
 <p><a href="#"
 socialshare
 socialshare-provider="twitter"
 socialshare-text="convertpdf pdftransform pdftoword wordtopdf pdftoimage pdftojpeg"
 socialshare-hashtags="convertpdf,pdftransform,pdftoword,wordtopdf,pdftoimage,pdftojpeg"
-socialshare-url="http://www.transformpdf.com">
+socialshare-url="https://www.transformpdf.com">
 Share me on Twitter
 </a><a href="#"
 socialshare
 socialshare-provider="facebook"
 socialshare-text="convertpdf pdftransform pdftoword wordtopdf pdftoimage pdftojpeg"
 socialshare-hashtags="convertpdf,pdftransform,pdftoword,wordtopdf,pdftoimage,pdftojpeg"
-socialshare-url="http://www.transformpdf.com">
+socialshare-url="https://www.facebook.com/transformpdf/">
 Share me on Facebook
 </a></p>
     <p>All data submitted/uploaded is deleted after 10 minutes.</p>
     <p>Copyright@2018 by transformpdf.com - All rights reserved.</p>
-    <p>|<a href="#!about">About us</a>|<a href="#!contact">Contact us</a>|<a href="#!sitemap">sitemap</a>|</p>
+    <p>|<a href="/about">About us</a>|<a href="/contact">Contact us</a>|<a href="/sitemap">sitemap</a>|</p>
 
 </footer>
 </body>
