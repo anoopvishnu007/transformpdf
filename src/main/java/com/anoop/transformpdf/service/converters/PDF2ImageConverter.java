@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -41,14 +40,18 @@ public class PDF2ImageConverter {
 	public static void generatePDFFromImage(File outputDir, Document documentObj)
 			throws IOException, BadElementException, DocumentException {
 		com.itextpdf.text.Document document = new com.itextpdf.text.Document();
-		FileOutputStream fos = new FileOutputStream(
-				outputDir.getPath() + File.separator + FilenameUtils.getBaseName(documentObj.getFileName()) + ".pdf");
+		File outFile = new File(
+				outputDir.getPath() + File.separator
+						+ FilenameUtils.getBaseName(documentObj.getFileName()) + ".pdf");
+		FileOutputStream fos = new FileOutputStream(outFile);
 		PdfWriter writer = PdfWriter.getInstance(document, fos);
 		writer.open();
 		document.open();
-		document.add(Image.getInstance((new URL(documentObj.getSourceFile().getPath()))));
+		document.add(Image.getInstance(documentObj.getSourceFile().getPath()));
 		document.close();
 		writer.close();
+		documentObj.setConvertedFile(outFile);
+		documentObj.setOutputFileName(outFile.getName());
 	}
 
 }

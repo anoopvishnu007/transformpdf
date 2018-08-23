@@ -3,20 +3,28 @@
         <div class="col-sm-2 sidenav">
             <div class="well" style="min-height: unset !important; padding: 0px !important;">
                <!--  <img src="img/advertisement.jpg" width="100%" height="120px"> -->
-           <adsense ad-client="ca-pub-8362980887009770" ad-slot="2880050415" inline-style="display:inline-block;width:200px;height:400px" ad-format="auto"></adsense>   
+           <adsense ad-client="ca-pub-8362980887009770" ad-slot="2880050415" inline-style="display:inline-block;width:200px;height:400px" ></adsense>   
             </div>
         </div>
         
         <div class="col-sm-8 text-left">
             <div class="file-upload-option" style="width: 100%;float: unset !important;">
-Free and easy to use online PDF to Jpeg,PNG,doc,docx and text converter to extract data from PDF files without having to install any software.
+<h2><p>Free and easy to use online PDF to Jpeg,PNG,doc,docx and text converter to extract data from PDF files without having to install any software.
 Click the SUBMIT button after selecting the PDF file you wish to convert. Wait for the conversion process to finish.After the conversion finishes 
 the DOWNLOAD button will be displayed. Download the results by clicking the DOWNLOAD button to get them all at once in a ZIP archive if multiple 
-files are there else corresponding single file will be downloaded.
+files are there else corresponding single file will be downloaded.</p></h2>
+<!-- Tab links -->
+<div class="tab">
+  <button id="pdftoanyBt"  class="tablinks active" onclick="angular.element(this).scope().clearAll();openTab(event, 'pdftoany')">PDF to Any</button>
+  <button id="anytopdfBt"  class="tablinks" onclick="angular.element(this).scope().clearAll();openTab(event, 'anytopdf')">Any to PDF</button>
+</div>
+<div id="pdftoany" class="tabcontent active" style="display:block !important;">
 
                 <!--PDF to Image-->
                 <div class="header clearfix">
-                    <span class="action-desc">Select files to convert or drag & drop them on this page<br/><b>100 MB</b> maximum file size</span>
+                    <span class="action-desc">Select files to convert or drag & drop them on this page<b>100 MB</b> maximum file size</span><br/>
+                    <span class="action-desc">Supports JPEG,PNG,TXT,doc,docx formats</span>
+                    
                 </div>
                 <div class="content">
                     <div class="row" style="margin: 0px">
@@ -32,8 +40,8 @@ files are there else corresponding single file will be downloaded.
                             </ul>
                             <span class="to-text">TO</span>
 
-                            <select class="selectpicker show-tick" onchange="angular.element(this).scope().selectImageType(this.value)">
-                                <option value="0">-- Select --</option>
+                            <select id="formatSelector1" class="selectpicker show-tick" onchange="angular.element(this).scope().selectImageType(this.value)">
+                                <option value="0" selected="selected">-- Select --</option>
                                 <option value="jpeg">JPEG</option>
                                 <option value="png">PNG</option>
                                 <option value="txt">TXT</option>
@@ -44,7 +52,7 @@ files are there else corresponding single file will be downloaded.
                         <div class="col-md-4 col-sm-4 col-xs-5" style="padding: 8px">
                             <div class="upload-btn-wrapper">
                                 <button class="btn">Choose File</button>
-                                <input type="file" accept="application/pdf" name="pc-upload"
+                                <input id="fileList1" type="file" accept="application/pdf" name="pc-upload"
                                        onchange="angular.element(this).scope().pdfUpload(this)" file-model="myFile"/>
 
                             </div>
@@ -62,17 +70,20 @@ files are there else corresponding single file will be downloaded.
                 </div>
 			 
                 <!--Image to PDF-->
-                <!--  <div class="space" style="height: 40px"></div>
+               </div>
+               <div id="anytopdf" class="tabcontent">
+                
 
                 <div class="header ">
-                    <span class="action-desc">Select files to convert or drag & drop them on this page<br/><b>100 MB</b> maximum file size</span>
+                    <span class="action-desc">Select files to convert or drag & drop them on this page<b>100 MB</b> maximum file size</span><br/>
+                    <span class="action-desc">Supports JPEG,PNG,TXT,doc,docx formats</span>
                 </div>
                 <div class="content">
 
                     <div class="row" style="margin: 0px">
                         <div class="col-md-8 col-sm-8 col-xs-7" style="padding: 8px">
-                            <select class="selectpicker show-tick" onchange="angular.element(this).scope().selectImageType(this.value)">
-                                <option value="0">-- Select --</option>
+                            <select id="formatSelector2" class="selectpicker show-tick" onchange="angular.element(this).scope().selectImageType(this.value)">
+                                <option value="0" selected="selected">-- Select --</option>
                                 <option value="jpeg">JPEG</option>
                                 <option value="png">PNG</option>
                                 <option value="txt">TXT</option>
@@ -95,7 +106,7 @@ files are there else corresponding single file will be downloaded.
                         <div class="col-md-4 col-sm-4 col-xs-5" style="padding: 8px">
                             <div class="upload-btn-wrapper">
                                 <button class="btn">Choose File</button>
-                                <input type="file" accept="image/*" name="pc-upload"
+                                <input id="fileList2" type="file" accept="image/*" name="pc-upload"
                                        onchange="angular.element(this).scope().imageUpload(this)"/>
 
                             </div>
@@ -105,19 +116,22 @@ files are there else corresponding single file will be downloaded.
                             </ul>
                         </div>
                     </div>
-                </div>-->
+                </div>
+</div>
+                
 
                 <br/>
                 <div class="row" style="margin: 0px">
                     <div>
                         <button class="submit-button" ng-click="submit()">Submit</button>
                     </div>
+                    <div id="loader" class="loader" style="display:none;"></div>
                     <div style="display: none" id="downloadBtn">
   
                         <a href="" ng-click="downloadFile()" ><button class="submit-button">Download</button></a>
                     </div>
  					<div>
-             <adsense ad-client="ca-pub-8362980887009770" ad-slot="1341520305"  inline-style="display:inline-block;width:800px;height:200px" ad-format="auto"></adsense>   
+             <adsense ad-client="ca-pub-8362980887009770" ad-slot="1341520305"  inline-style="display:inline-block;width:800px;height:200px"></adsense>   
                     </div>
                     <div  class="text-center col-sm-8">
 
@@ -159,16 +173,9 @@ files are there else corresponding single file will be downloaded.
         <div class="col-sm-2 sidenav">
             <div class="well" style="min-height: unset !important; padding: 0px !important;">
                 <!-- <img src="img/advertisement.jpg" width="100%" height="120px"> -->
-             <adsense ad-client="ca-pub-8362980887009770"  ad-slot="2880050415" inline-style="display:inline-block;width:200px;height:400px" ad-format="auto"></adsense>   
+             <adsense ad-client="ca-pub-8362980887009770"  ad-slot="2880050415" inline-style="display:inline-block;width:200px;height:400px"></adsense>   
 			 
- 			<ins class="adsbygoogle"
-			     style="display:block"
-			     data-ad-client="ca-pub-8362980887009770"
-			     data-ad-slot="6918933009"
-			     data-ad-format="auto"></ins>
-			<script>
-			(adsbygoogle = window.adsbygoogle || []).push({});
-			</script>
+ 			
             </div>
         </div>
         

@@ -6,6 +6,7 @@ import java.io.InputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,12 @@ public class TransformPdfController {
 		try {
 			Document document = new Document(file.getBytes(), file.getOriginalFilename(), convertFormat);
 			document.setResolution(Integer.valueOf(resolution));
-			metadata = transformService.convertPDFFile(document);
+			String selectedFileFormat = FilenameUtils.getExtension(document.getFileName());
+			if (selectedFileFormat.equalsIgnoreCase("pdf")) {
+				metadata = transformService.convertPDFFile(document);
+			} else {
+				metadata = transformService.convertFile(document);
+			}
 
 		} catch (RuntimeException e) {
 			LOG.error("Error while uploading.", e);

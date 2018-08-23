@@ -118,24 +118,33 @@ public class TransformService implements ITransformService, Serializable {
 			fileSystemDocumentDao.createFile(document, true);
 			String outputDir = fileSystemDocumentDao.getDirectoryPath(document.getUuid(), false);
 			File outputDirectory = new File(outputDir);
+			outputDirectory.mkdirs();
 			switch (format) {
 			case "png":
 				PDF2ImageConverter.generatePDFFromImage(outputDirectory, document);
+				break;
 			case "jpg":
 				PDF2ImageConverter.generatePDFFromImage(outputDirectory, document);
+				break;
 			case "jpeg":
 				PDF2ImageConverter.generatePDFFromImage(outputDirectory, document);
+				break;
 			case "doc":
 				PDF2WordConverter.generatePDFFromDoc(outputDirectory, document);
+				break;
 			case "docx":
 				PDF2WordConverter.generatePDFFromDoc(outputDirectory, document);
+				break;
 			case "txt":
 				PDF2TextConverter.generatePDFFromTxt(outputDirectory, document);
+				break;
 			case "html":
 				PDF2HTMLConverter.generatePDFFromHTML(outputDirectory, document);
+				break;
 
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
 
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block

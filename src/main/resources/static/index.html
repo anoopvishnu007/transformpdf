@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="https://720kb.github.io/csshelper/assets/ext/src/helper.css">
 	<link rel="stylesheet" type="text/css" href="//yastatic.net/highlightjs/8.2/styles/vs.min.css">
   <link rel="stylesheet" type="text/css" href="https://720kb.github.io/angular-socialshare/assets/css/awful.css">
-	
+	<script src="js/jquery-1.9.1.js"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap-select.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -24,8 +24,9 @@
 	 <script src="js/angular-route.js"></script>
 	 <script src="js/angulike.js"></script>
 	 
+	 
 		<!--  <script src="js/ng2-adsense.umd.min.js"></script>  -->
-	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" onerror="pdfformOnload();"></script>
  	<script src="js/angular-google-adsense.min.js"></script> 
   	<!-- <script src="js/angular-1.2.16.js"></script> -->
     <!-- Latest compiled and minified CSS -->
@@ -56,6 +57,41 @@ Word, PDF to JPG, PDF to PNG, PDF to Text, Text to PDF, PNG to PDF, JPG to PDF,
 Word to PDF, Image to PDF,download converted pdf"/>
 	
     <style>
+    /* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
     
     
         /* Remove the navbar's default margin-bottom and rounded borders */
@@ -142,7 +178,68 @@ Word to PDF, Image to PDF,download converted pdf"/>
             padding-left: 10px;
             font-size: 20px;
         }
-         
+         #loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 } 
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+  from{ bottom:-100px; opacity:0 } 
+  to{ bottom:0; opacity:1 }
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* CSS for share button */
+.rrssb-buttons{box-sizing:border-box;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;height:36px;margin:0;padding:0;width:100%}.rrssb-buttons:after{clear:both}.rrssb-buttons:after,.rrssb-buttons:before{content:' ';display:table}.rrssb-buttons li{box-sizing:border-box;float:left;height:100%;line-height:13px;list-style:none;margin:0;padding:0 2px}.rrssb-buttons li.rrssb-email a{background-color:#0a88ff}.rrssb-buttons li.rrssb-email a:hover{background-color:#006ed6}.rrssb-buttons li.rrssb-facebook a{background-color:#306199}.rrssb-buttons li.rrssb-facebook a:hover{background-color:#244872}.rrssb-buttons li.rrssb-tumblr a{background-color:#32506d}.rrssb-buttons li.rrssb-tumblr a:hover{background-color:#22364a}.rrssb-buttons li.rrssb-linkedin a{background-color:#007bb6}.rrssb-buttons li.rrssb-linkedin a:hover{background-color:#005983}.rrssb-buttons li.rrssb-twitter a{background-color:#26c4f1}.rrssb-buttons li.rrssb-twitter a:hover{background-color:#0eaad6}.rrssb-buttons li.rrssb-googleplus a{background-color:#e93f2e}.rrssb-buttons li.rrssb-googleplus a:hover{background-color:#ce2616}.rrssb-buttons li.rrssb-youtube a{background-color:#df1c31}.rrssb-buttons li.rrssb-youtube a:hover{background-color:#b21627}.rrssb-buttons li.rrssb-reddit a{background-color:#8bbbe3}.rrssb-buttons li.rrssb-reddit a:hover{background-color:#62a3d9}.rrssb-buttons li.rrssb-pinterest a{background-color:#b81621}.rrssb-buttons li.rrssb-pinterest a:hover{background-color:#8a1119}.rrssb-buttons li.rrssb-pocket a{background-color:#ed4054}.rrssb-buttons li.rrssb-pocket a:hover{background-color:#e4162d}.rrssb-buttons li.rrssb-github a{background-color:#444}.rrssb-buttons li.rrssb-github a:hover{background-color:#2b2b2b}.rrssb-buttons li.rrssb-instagram a{background-color:#517fa4}.rrssb-buttons li.rrssb-instagram a:hover{background-color:#406582}.rrssb-buttons li.rrssb-delicious a{background-color:#0B79E5}.rrssb-buttons li.rrssb-delicious a:hover{background-color:#095fb4}.rrssb-buttons li.rrssb-vk a{background-color:#4d71a9}.rrssb-buttons li.rrssb-vk a:hover{background-color:#3d5a86}.rrssb-buttons li.rrssb-hackernews a{background-color:#f60}.rrssb-buttons li.rrssb-hackernews a:hover{background-color:#cc5200}.rrssb-buttons li a{background-color:#ccc;border-radius:2px;box-sizing:border-box;display:block;font-size:11px;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-weight:700;height:100%;padding:11px 7px 12px 27px;position:relative;text-align:center;text-decoration:none;text-transform:uppercase;-webkit-transition:background-color .2s ease-in-out;transition:background-color .2s ease-in-out;width:100%}.rrssb-buttons li a .rrssb-icon{display:block;left:10px;padding-top:9px;position:absolute;top:0;width:10%}.rrssb-buttons li a .rrssb-icon svg{height:17px;width:17px}.rrssb-buttons li a .rrssb-icon svg path,.rrssb-buttons li a .rrssb-icon svg polygon{fill:#fff}.rrssb-buttons li a .rrssb-text{color:#fff}.rrssb-buttons li 
+/* Privacy */
+  .cc_banner-wrapper{z-index:9001;position:relative}.cc_container {z-index: 999;}.cc_btn{cursor:pointer;text-align:center;font-size:0.6em;transition:font-size 200ms;line-height:1em}.cc_container .cc_message{font-family:"Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial; font-size:0.6em;transition:font-size 200ms;margin:0;padding:0;line-height:1.5em}.cc_container @media screen and (min-width: 500px){.cc_container .cc_btn{font-size:0.8em}.cc_container .cc_message{font-size:0.8em}}@media screen and (min-width: 768px){.cc_container .cc_btn{font-size:1em}.cc_container .cc_message{font-size:1em;line-height:1em}}@media screen and (min-width: 992px){.cc_container .cc_message{font-size:.9em}}@media print{.cc_banner-wrapper,.cc_container{display:none}}.cc_container{position:fixed;left:0;right:0;bottom:0;overflow:hidden;padding:10px}.cc_container .cc_btn{padding:8px 10px;background-color:#f1d600;cursor:pointer;transition:font-size 200ms;text-align:center;font-size:0.6em;display:block;width:33%;margin-left:10px;float:right;max-width:120px}.cc_container .cc_message{transition:font-size 200ms;font-size:0.6em;display:block}@media screen and (min-width: 500px){.cc_container .cc_btn{font-size:0.8em}.cc_container .cc_message{margin-top:0.5em;font-size:0.8em}}@media screen and (min-width: 768px){.cc_container{padding:15px 30px 15px}.cc_container .cc_btn{font-size:1em;padding:8px 15px}.cc_container .cc_message{font-size:1em}}@media screen and (min-width: 992px){.cc_container .cc_message{font-size:.9em}}.cc_container{background:#fff;color:#bbb9b9;font-size:17px;box-sizing:border-box;border:1px solid #ccc}.cc_container ::-moz-selection{background:#ff5e99;color:#fff;text-shadow:none}.cc_container .cc_btn,.cc_container .cc_btn:visited{color:#fff;background-color:#0d9bff;transition:background 200ms ease-in-out,color 200ms ease-in-out,box-shadow 200ms ease-in-out;-webkit-transition:background 200ms ease-in-out,color 200ms ease-in-out,box-shadow 200ms ease-in-out;border-radius:5px;-webkit-border-radius:5px}.cc_container .cc_btn:hover,.cc_container .cc_btn:active{background-color:#36d42c;color:#fff}.cc_container a,.cc_container a:visited{text-decoration:none;color:#31a8f0;transition:200ms color}.cc_container a:hover,.cc_container a:active{color:#555}@-webkit-keyframes slideUp{0%{-webkit-transform:translateY(66px);transform:translateY(66px)}100%{-webkit-transform:translateY(0);transform:translateY(0)}}@keyframes slideUp{0%{-webkit-transform:translateY(66px);-ms-transform:translateY(66px);transform:translateY(66px)}100%{-webkit-transform:translateY(0);-ms-transform:translateY(0);transform:translateY(0)}}.cc_container,.cc_message,.cc_btn{animation-duration:0.8s;-webkit-animation-duration:0.8s;-moz-animation-duration:0.8s;-o-animation-duration:0.8s;-webkit-animation-name:slideUp;animation-name:slideUp}
+
     </style>
  <script src="app.js"></script>
      
@@ -165,6 +262,30 @@ Word to PDF, Image to PDF,download converted pdf"/>
      js.src = "https://connect.facebook.net/en_US/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
+  
+  function getCookieValue(a, b) {
+	    b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+	    return b ? b.pop() : '';
+	}
+	function createCookie(name, value, days) {
+	    var date, expires;
+	    if (days) {
+	        date = new Date();
+	        date.setTime(date.getTime()+(days*24*60*60*1000));
+	        expires = "; expires="+date.toGMTString();
+	    } else {
+	        expires = "";
+	    }
+	    document.cookie = name+"="+value+expires+"; path=/";
+	}
+	function pdfformOnload(){
+	    if(getCookieValue("Adblocker") === "installed" && typeof(window.google_jobrunner) != "undefined" ){
+	       
+	       createCookie("Adblocker","uninstalled",365);
+	       ga('send', 'event', 'Adblocker', 'uninstalled', 'Adblocker Target'); 
+
+	      }
+	}
 </script>
 
 <nav class="navbar navbar-inverse">
@@ -201,7 +322,22 @@ Word to PDF, Image to PDF,download converted pdf"/>
  
   <div ng-view></div>
 
+    <div id = "cookieconsent" style = "display: none;" class="cc_banner cc_container cc_container--open"><a href="#" onclick="dismiss()" class="cc_btn cc_btn_accept_all">Got it!</a><p class="cc_message">This website uses cookies to ensure you get the best experience on our website <a data-cc-if="options.link" target="_self" class="cc_more_info" href="http://omegaspeedtest.com/Privacy-Policy.php">More info</a></p></div>
+<script type="text/javascript">
 
+var cookieconsent = document.getElementById("cookieconsent");
+if(getCookieValue("pdfcookieconsentvalue").length === 0){
+	cookieconsent.style.display = ("block");
+}else{
+  	cookieconsent.style.display = ("none");
+}
+  function dismiss(){
+
+     createCookie("pdfcookieconsentvalue","Accepted",365);
+      cookieconsent.style.display = ("none"); 
+}
+
+</script>
 <footer class="text-center " style="margin-bottom: 0px">
 <p><a href="#"
 socialshare

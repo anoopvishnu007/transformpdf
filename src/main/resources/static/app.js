@@ -44,6 +44,7 @@ pdfApp.directive('fileModel', [ '$parse', function($parse) {
 pdfApp.controller('appController',['$scope','$rootScope','$http','fileUpload', function ($scope, $rootScope, $http,fileUpload) {
     $scope.selectedImgeType = null;
    var downloadBtn = document.getElementById('downloadBtn');
+   var loader = document.getElementById('loader');
     $scope.fileList = [];
 
     $scope.pdfUpload = function (ele) {
@@ -92,10 +93,12 @@ pdfApp.controller('appController',['$scope','$rootScope','$http','fileUpload', f
         var file = $scope.fileList[0];
 		var format = $scope.imgType;
 			console.log('file is ' + JSON.stringify(file));
+			loader.style.display="block";
 		var uploadUrl = "/transform/uploadPDFFile";
 		$scope.metadata=fileUpload.uploadFileToUrl(uploadUrl, file, format).then(function(data){
 	    	 $scope.metadata = data;
 	    	 $scope.download = true;
+	    	 loader.style.display="none";
              downloadBtn.style.display = 'block';
 	     });
         if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
@@ -106,8 +109,30 @@ pdfApp.controller('appController',['$scope','$rootScope','$http','fileUpload', f
     $scope.downloadFile = function(){            	
         window.open("transform/downloadFile/"+$scope.metadata.data.uuid+"/"+$scope.metadata.data.outputFileName,'_self');
      }
-}]);
+    $scope.clearAll = function(){
+    	$scope.imgType=null;
+    	$scope.fileList=[];
+    	 downloadBtn.style.display = 'none';
+    	 loader.style.display="none";
+    	 document.getElementById('formatSelector1').selectedIndex=0;
+    	 document.getElementById('formatSelector2').selectedIndex=0;
+    	 document.getElementById('formatSelector1').selected=this.defaultSelected;
+    	 document.getElementById('formatSelector2').selected=this.defaultSelected;
+    	 document.getElementById('fileList1').value="";
+    	 document.getElementById('fileList2').value="";
 
+    }
+}]);
+$("#pdftoanyBt").on("click", function () {
+    $('#formatSelector1 option').prop('selected', function() {
+        return this.defaultSelected;
+    });
+});
+$("#anytopdfBt").on("click", function () {
+    $('#formatSelector2 option').prop('selected', function() {
+        return this.defaultSelected;
+    });
+});
 pdfApp.controller('aboutController', function($scope) {
 	$scope.message = 'www.transformpdf.com is a public utility service provider to do all kind of operation using pdf. The site offers various pdf transformation such as pdf to doc,pdf to text, pdf to image,jepg,png or PNG etc';
 });
@@ -169,5 +194,24 @@ pdfApp.controller('myController', [
     }
 ]);
 
-    
+function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+} 
     
