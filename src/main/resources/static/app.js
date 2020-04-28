@@ -1,5 +1,5 @@
 
-var pdfApp = angular.module('pdfApp', ['ngRoute','angular-google-adsense','720kb.socialshare','angulike']);
+var pdfApp = angular.module('pdfApp', ['ngRoute','angular-google-adsense']);
 
 pdfApp.config(function($routeProvider,$locationProvider) {
 	$routeProvider
@@ -21,6 +21,42 @@ pdfApp.config(function($routeProvider,$locationProvider) {
 			templateUrl : '/robots.txt'
 		})
 		.when('/', {
+			templateUrl : 'pages/home.html',
+			controller  : 'appController'
+		})
+		.when('/pdftojpg', {
+			templateUrl : 'pages/home.html',
+			controller  : 'appController'
+		})
+		.when('/pdftojpeg', {
+			templateUrl : 'pages/home.html',
+			controller  : 'appController'
+		})
+		.when('/pdftotext', {
+			templateUrl : 'pages/home.html',
+			controller  : 'appController'
+		})
+		.when('/pdftojpg', {
+			templateUrl : 'pages/home.html',
+			controller  : 'appController'
+		})
+		.when('/pdftojpg', {
+			templateUrl : 'pages/home.html',
+			controller  : 'appController'
+		})
+		.when('/pdftojpg', {
+			templateUrl : 'pages/home.html',
+			controller  : 'appController'
+		})
+		.when('/pdftojpg', {
+			templateUrl : 'pages/home.html',
+			controller  : 'appController'
+		})
+		.when('/pdftojpg', {
+			templateUrl : 'pages/home.html',
+			controller  : 'appController'
+		})
+		.when('/pdftojpg', {
 			templateUrl : 'pages/home.html',
 			controller  : 'appController'
 		});
@@ -122,6 +158,25 @@ pdfApp.controller('appController',['$scope','$rootScope','$http','fileUpload', f
     	 document.getElementById('fileList2').value="";
 
     }
+    var tools = [
+        ["1","pdftodoc",         "https://www.transformpdf.com",           "PDF to DOC"],
+        ["2","pdftodocx",        "https://www.transformpdf.com",          "PDF to DOCX"],
+        ["3","pdftotext",       "https://www.transformpdf.com",         "PDF to Text"],
+        ["4","pdftoimage",      "https://www.transformpdf.com",        "PDF to JPG"],
+        ["5","pdftopng",         "https://www.transformpdf.com",           "PDF to PNG"],
+        ["6","pdftojpg",        "http://pdf2jpg.in",          "PDF to jpg"],
+        ["7","jpegtopdf",   "http://jpeg2pdfconverter.com",     "Jpeg to PDF"],
+        ["8","pdftojpeg",      "http://pdftojpeg.in",        "PDF to Jpeg"],
+        ["9","pdf2jpeg",         "http://pdftojpegconverter.com",           "PDF to JPG"],
+        ["10","anytopdf",           "https://www.transformpdf.com",             "Any to PDF"],
+        ["11","pdftoany",           "https://www.transformpdf.com",             "PDF to Any"]
+    ];
+    $scope.myModel = {
+        Url: 'http://www.transformpdf.com',
+        Name: "Online Free PDF converter | Convert PDF to word DOC, JPG or JPEG, PNG, text and vice-versa", 
+        ImageUrl: '',
+        tools:tools
+    };
 }]);
 $("#pdftoanyBt").on("click", function () {
     $('#formatSelector1 option').prop('selected', function() {
@@ -186,13 +241,45 @@ pdfApp.run([
 
 pdfApp.controller('myController', [
     '$scope', function ($scope) {
+    	var tools = [
+            ["1","pdftodoc",         "https://www.transformpdf.com",           "PDF to DOC"],
+            ["2","pdftodocx",        "https://www.transformpdf.com",          "PDF to DOCX"],
+            ["3","pdftotext",       "https://www.transformpdf.com",         "PDF to Text"],
+            ["4","pdftoimage",      "https://www.transformpdf.com",        "PDF to JPG"],
+            ["5","pdftopng",         "https://www.transformpdf.com",           "PDF to PNG"],
+            ["6","pdftojpg",        "http://pdf2jpg.in",          "PDF to jpg"],
+            ["7","jpegtopdf",   "http://jpeg2pdfconverter.com",     "Jpeg to PDF"],
+            ["8","pdftojpeg",      "http://pdftojpeg.in",        "PDF to Jpeg"],
+            ["9","pdf2jpeg",         "http://pdftojpegconverter.com",           "PDF to JPG"],
+            ["10","topdf",           "https://www.transformpdf.com",             "Any to PDF"],
+            ["11","pdftoany",           "https://www.transformpdf.com",             "PDF to Any"]
+        ];
         $scope.myModel = {
             Url: 'http://www.transformpdf.com',
             Name: "Online Free PDF converter | Convert PDF to word DOC, JPG or JPEG, PNG, text and vice-versa", 
-            ImageUrl: ''
+            ImageUrl: '',
+            tools:tools
         };
     }
 ]);
+function loadWebSite(){
+	var tools = [
+        ["pdftodoc",         "https://www.transformpdf.com",           "PDF to DOC"],
+        ["pdftodocx",        "https://www.transformpdf.com",          "PDF to DOCX"],
+        ["pdftotext",       "https://www.transformpdf.com",         "PDF to Text"],
+        ["pdftoimage",      "https://www.transformpdf.com",        "PDF to JPG"],
+        ["pdftopng",         "https://www.transformpdf.com",           "PDF to PNG"],
+        ["pdftojpg",        "http://pdf2jpg.in",          "PDF to jpg"],
+        ["jpegtopdf",   "http://jpeg2pdfconverter.com",     "Jpeg to PDF"],
+        ["pdftojpeg",      "http://pdftojpeg.in",        "PDF to Jpeg"],
+        ["pdf2jpeg",         "http://pdftojpegconverter.com",           "PDF to JPG"],
+        ["topdf",           "https://www.transformpdf.com",             "Any to PDF"],
+        ["pdftoany",           "https://www.transformpdf.com",             "PDF to Any"]
+    ];
+
+	var hostUrl=window.location.href;
+	
+}
 
 function openTab(evt, tabName) {
     // Declare all variables
