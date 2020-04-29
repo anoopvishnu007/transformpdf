@@ -25,11 +25,23 @@ repositories {
 	url("http://nexus.xwiki.org/nexus/content/groups/public/")
 	}
 }
-
+sourceSets {
+    intTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/intTest/java')
+        }
+        
+    }
+}
 configurations {
 	providedRuntime
+	integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
+    
 }
-
+ 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-starter-web')
@@ -53,3 +65,8 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	
 }
+task integrationTest(type: Test) {
+    classpath = sourceSets.intTest.runtimeClasspath
+    outputs.upToDateWhen { false }
+}
+integrationTest.mustRunAfter test
