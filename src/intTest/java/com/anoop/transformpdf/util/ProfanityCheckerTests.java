@@ -5,16 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
 
 
 public class ProfanityCheckerTests {
 
 	private static ProfanityChecker profanityChecker;
 	
-	@BeforeAll
-	public static void setup() {
+	@Before
+	public void setup() {
 		Set<String> profanities = new HashSet<>();
 		profanities.add(".NET");
 		profanities.add("Micro$oft");

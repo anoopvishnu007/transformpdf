@@ -38,8 +38,8 @@ sourceSets {
 }
 configurations {
 	providedRuntime
-	integrationTestCompile.extendsFrom testCompile
-    integrationTestRuntime.extendsFrom testRuntime
+	intTestCompile.extendsFrom testCompile
+    intTestRuntime.extendsFrom testRuntime
     
 }
  
@@ -64,13 +64,38 @@ dependencies {
 	
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile('org.junit.jupiter:junit-jupiter-api:${jUnit5Version}')
-	integrationTestCompile('org.junit.jupiter:junit-jupiter-api:${jUnit5Version}')
-	integrationTestCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.junit.jupiter:junit-jupiter-api:5.0.0-M5')
+	intTestCompile('org.springframework.boot:spring-boot-starter-test')
+	intTestCompile('org.junit.jupiter:junit-jupiter-api:5.0.0-M5')
+	intTestCompile('junit:junit:4.12')
 	
 }
-task integrationTest(type: Test) {
+task collectResults() {
+  def output = file("build/reports/summary.csv")
+  doLast {
+    file("build/reports").mkdirs()
+    output.text = '"Project","Test","Time","Result","Duration"\r\n'
+    allprojects.each { project2 ->
+      logger.info("Processing project ${project2.name}")
+      def resultFiles = project2.fileTree("build") { include '**/TEST-*.xml' }
+      resultFiles.each { file ->
+        logger.info("Processing report ${file}")
+        def testsuite = new XmlSlurper().parse(file)
+        testsuite.testcase.each { testcase ->
+          def result = "pass"
+          if (!testcase.failure.isEmpty()) { result = "fail" }
+          else if (!testcase.skipped.isEmpty()) { result = "skip" }
+          output << "\"${project2.name}\",\"${testcase.@classname}.${testcase.@name}\",\"${testcase.@timestamp}\",\"${result}\",\"${testcase.@time}\"\r\n"
+        }
+      }
+    }
+  }
+}
+task intTest(type: Test) {
+    testClassesDir = sourceSets.intTest.output.classesDir
     classpath = sourceSets.intTest.runtimeClasspath
     outputs.upToDateWhen { false }
 }
-integrationTest.mustRunAfter test
+intTest.mustRunAfter test
+intTest.finalizedBy(collectResults)
+
