@@ -45,7 +45,7 @@ pipeline {
         }
         stage('Assemble') {
             steps {
-                 stash includes: '**/build/libs/*.war', name: 'app'
+                 stash includes: '**/build/libs/*.jar', name: 'app'
                  stash includes: '**/build/reports/*.csv', name: 'TestResultsSummary'
                  
             }
