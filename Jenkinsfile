@@ -26,11 +26,11 @@ pipeline {
         
         stage('Integration Tests') {
                     steps {
-                        gradlew('integrationTest')
+                        gradlew('intTest')
                     }
                     post {
                         always {
-                            junit '**/build/test-results/integrationTest/TEST-*.xml'
+                            junit '**/build/test-results/intTest/TEST-*.xml'
                         }
                     }
         }
@@ -45,8 +45,9 @@ pipeline {
         }
         stage('Assemble') {
             steps {
-                gradlew('assemble')
-                stash includes: '**/build/libs/*.war', name: 'app'
+                 stash includes: '**/build/libs/*.war', name: 'app'
+                 stash includes: '**/build/reports/*.csv', name: 'TestResultsSummary'
+                 
             }
         }
         stage('Promotion') {
