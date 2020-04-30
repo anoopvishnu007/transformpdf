@@ -21,6 +21,9 @@ pipeline {
                 }
             }
         }
+        
+ 
+        
         stage('Integration Tests') {
                     steps {
                         gradlew('integrationTest')
@@ -30,6 +33,15 @@ pipeline {
                             junit '**/build/test-results/integrationTest/TEST-*.xml'
                         }
                     }
+        }
+        stage("Review integration test?") {
+            steps {
+                script {
+                    env.RELEASE_SCOPE = input message: 'User input required', ok: 'Release!',
+                            parameters: [choice(name: 'RELEASE_SCOPE', choices: 'patch\nminor\nmajor', description: 'What is the release scope?')]
+                }
+                echo "${env.RELEASE_SCOPE}"
+            }
         }
         stage('Assemble') {
             steps {
