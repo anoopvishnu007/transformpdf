@@ -45,7 +45,8 @@ pipeline {
         }
         stage('Assemble') {
             steps {
-                 archiveArtifacts artifacts: '**/build/libs/*.jar', '**/build/reports/*.csv'              
+                 archiveArtifacts artifacts: '**/build/libs/*.jar', onlyIfSuccessful: true
+                 archiveArtifacts TestResultSummary: '**/build/reports/*.csv', onlyIfSuccessful: true                              
             }
         }
         stage('Promotion') {
