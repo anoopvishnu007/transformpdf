@@ -6,10 +6,10 @@ pipeline {
     }
 
     stages {
-        stage('Compile') {
+        stage('Build') {
             steps {
-                gradlew('clean', 'classes')
-            }
+                gradlew('clean', 'classes', 'build')
+            }            
         }
         stage('Unit Tests') {
             steps {
