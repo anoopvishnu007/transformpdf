@@ -8,13 +8,13 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                gradlew('clean', 'classes', 'build')
+            	sh "./gradlew clean classes build -s"
             }            
         }
         stage('Unit Tests') {
             steps {
-                gradlew('test')
-            }
+            	sh "./gradlew test"
+             }
             post {
                 always {
                     junit '**/build/test-results/test/TEST-*.xml'
@@ -26,7 +26,7 @@ pipeline {
         
         stage('Integration Tests') {
                     steps {
-                        gradlew('intTest')
+                       sh "./gradlew intTest"                    
                     }
                     post {
                         always {
@@ -37,7 +37,7 @@ pipeline {
         stage("Review integration test?") {
             steps {
                 script {
-                    env.RELEASE_SCOPE = input message: 'User input required', ok: 'Release!',
+                    env.RELEASE_SCOPE = input message: 'User input required', ok: 'Reviewed!',
                             parameters: [choice(name: 'RELEASE_SCOPE', choices: 'patch\nminor\nmajor', description: 'What is the release scope?')]
                 }
                 echo "${env.RELEASE_SCOPE}"
@@ -45,9 +45,7 @@ pipeline {
         }
         stage('Assemble') {
             steps {
-                 stash includes: '**/build/libs/*.jar', name: 'app'
-                 stash includes: '**/build/reports/*.csv', name: 'TestResultsSummary'
-                 
+                 archiveArtifacts artifacts: '**/build/libs/*.jar', '**/build/reports/*.csv'              
             }
         }
         stage('Promotion') {
@@ -59,8 +57,4 @@ pipeline {
         }        
     }
      
-}
-
-def gradlew(String... args) {
-    sh "./gradlew ${args.join(' ')} -s"
 }
